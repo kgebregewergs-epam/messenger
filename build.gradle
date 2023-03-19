@@ -37,6 +37,9 @@ dependencies {
     testRuntimeOnly ('org.junit.jupiter:junit-jupiter-engine:5.6.2')
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.6.2")
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.6.2")
+
+    // added a mockito
+    testImplementation 'org.mockito:mockito-core:2.1.0'
 }
 
 test {
