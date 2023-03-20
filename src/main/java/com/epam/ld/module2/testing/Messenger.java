@@ -28,10 +28,21 @@ public class Messenger {
      *
      * @param client   the client
      * @param template the template
+     * @return String
      */
-    public void sendMessage(Client client, Template template) {
-        String messageContent =
-            templateEngine.generateMessage(template, client);
-        mailServer.send(client.getAddresses(), messageContent);
+    public String sendMessage(Client client, Template template) {
+        if(client != null && template != null) {
+            String messageContent =
+                    templateEngine.generateMessage(template, client);
+            mailServer.send(client.getAddresses(), messageContent);
+
+            return messageContent;
+        }
+
+        else if(client == null) {
+            return null;
+        }
+
+        return null;
     }
 }
