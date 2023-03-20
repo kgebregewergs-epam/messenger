@@ -9,6 +9,7 @@ public class MailServer {
      *
      * @param addresses  the addresses
      * @param messageContent the message content
+     * @return boolean
      */
     public Boolean send(String addresses, String messageContent) {
         if (addresses == null && messageContent == null) {
