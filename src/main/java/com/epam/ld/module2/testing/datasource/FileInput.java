@@ -9,10 +9,13 @@ import java.io.*;
  */
 public class FileInput {
     private static final Logger logger = Logger.getLogger(FileInput.class);
+
+
     /**
-     * get Input.
-     * @param file
-     * @return an Input data
+     * getInput.
+     *
+     * @param file   file name
+     * @return Input
      */
     public Input getInput(String file) {
         logger.info("The provided file path is: " + file);

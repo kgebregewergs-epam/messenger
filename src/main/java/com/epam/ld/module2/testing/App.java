@@ -22,7 +22,11 @@ public class App {
     private static ConsoleInput consoleInput;
 
 
-
+    /**
+     *main method.
+     *
+     * @param args   args we get from command
+     */
     public static void main(String[] args) {
         messenger = new Messenger(mailSever, templateEngine);
 
