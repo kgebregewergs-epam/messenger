@@ -31,16 +31,12 @@ public class Messenger {
      * @return String
      */
     public String sendMessage(Client client, Template template) {
-        if(client != null && template != null) {
+        if (client != null && template != null) {
             String messageContent =
                     templateEngine.generateMessage(template, client);
             mailServer.send(client.getAddresses(), messageContent);
 
-            return messageContent;
-        }
-
-        else if(client == null) {
-            return null;
+            return messageContent + " sending to: " + client.getAddresses();
         }
 
         return null;

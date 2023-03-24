@@ -2,15 +2,14 @@ package com.epam.ld.module2.testing.template;
 
 import com.epam.ld.module2.testing.Client;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
  * The type Template engine.
  */
 public class TemplateEngine {
-    Set<String> validTemplates = new HashSet<>(Arrays.asList("${subject}", "${body}", "${cc}"));
+    Set<String> validTemplates = Set.of("${subject}", "${body}", "${cc}");
+
     /**
      * Generate message string.
      *
@@ -18,7 +17,7 @@ public class TemplateEngine {
      * @param client   the client
      * @return the string
      */
-    public String generateMessage(Template template, Client client){
+    public String generateMessage(Template template, Client client) {
         boolean isValid = checkTemplate(template);
 
         if (isValid && client != null) {
@@ -38,9 +37,13 @@ public class TemplateEngine {
      * @param template the template
      * @return boolean
      */
-    private boolean checkTemplate(Template template) {
-        if (!(validTemplates.contains(template.getTag())) && template.getValue() == null) {
-            throw new IllegalArgumentException("Provided with Invalid tag and value");
+    public boolean checkTemplate(Template template) {
+        if (template.getTag() == null) {
+            throw new IllegalArgumentException("Provided with Invalid tag");
+        }
+
+        if (template.getValue() == null) {
+            throw new IllegalArgumentException("Provided with Invalid tag");
         }
 
         return validTemplates.contains(template.getTag());
