@@ -32,12 +32,13 @@ public class Messenger {
      */
     public String sendMessage(Client client, Template template) {
         if (client == null) {
-            return "";
+            throw new NullPointerException("The client must be not null");
         }
 
         if (template == null) {
-            return "";
+            throw new NullPointerException("The template must be not null");
         }
+
         String messageContent =
                 templateEngine.generateMessage(template, client);
         mailServer.send(client.getAddresses(), messageContent);

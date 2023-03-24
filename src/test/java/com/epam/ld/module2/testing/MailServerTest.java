@@ -24,7 +24,7 @@ public class MailServerTest {
 
     @ParameterizedTest
     @NullSource
-    public void shouldThrowNullPointerExecutionWhenTheAddressIsNul(String address) throws NullPointerException {
+    public void shouldThrowNullPointerExecutionWhenTheAddressIsNul(String address){
 
         Exception exception = assertThrows(NullPointerException.class, () ->
         {
@@ -37,7 +37,7 @@ public class MailServerTest {
     }
 
     @Test
-    public void shouldThrowNullPointerExecutionWhenTheMessageContentIsNul() throws NullPointerException {
+    public void shouldThrowNullPointerExecutionWhenTheMessageContentIsNul() {
 
         Exception exception = assertThrows(NullPointerException.class, () ->
         {
