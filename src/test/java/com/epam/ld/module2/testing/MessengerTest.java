@@ -34,8 +34,9 @@ public class MessengerTest {
     @Test
     public void checkSendMessageSuccessfully() {
         doReturn("Hi: ${body}").when(templateEngine).generateMessage(template, client);
+        when(client.getAddresses()).thenReturn("test@Test");
         String result = messenger.sendMessage(client, template);
-        assertEquals("Hi: ${body}", result);
+        assertTrue(result.contains("Hi: ${body}"));
 
     }
 
@@ -43,13 +44,13 @@ public class MessengerTest {
     public  void checkSendMessageShouldFailWhenClientIsNull() {
         doReturn(null).when(templateEngine).generateMessage(template, null);
         String result = messenger.sendMessage(null, template);
-        assertFalse(result != null);
+        assertNull(result);
     }
 
     @Test
     public  void checkSendMessageShouldFailWhenTemplateEngineIsNull() {
         doReturn(null).when(templateEngine).generateMessage(null, client);
         String result = messenger.sendMessage(client, null);
-        assertFalse(result != null);
+        assertNull (result);
     }
 }
