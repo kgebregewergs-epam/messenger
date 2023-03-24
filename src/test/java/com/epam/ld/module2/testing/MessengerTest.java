@@ -4,14 +4,12 @@ import com.epam.ld.module2.testing.template.Template;
 import com.epam.ld.module2.testing.template.TemplateEngine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Spy;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class MessengerTest {
 
-    @Spy
     private TemplateEngine templateEngine;
 
     private  MailServer mailServer;
@@ -44,13 +42,13 @@ public class MessengerTest {
     public  void checkSendMessageShouldFailWhenClientIsNull() {
         doReturn(null).when(templateEngine).generateMessage(template, null);
         String result = messenger.sendMessage(null, template);
-        assertNull(result);
+        assertTrue(result.isEmpty());
     }
 
     @Test
     public  void checkSendMessageShouldFailWhenTemplateEngineIsNull() {
         doReturn(null).when(templateEngine).generateMessage(null, client);
         String result = messenger.sendMessage(client, null);
-        assertNull (result);
+        assertTrue(result.isEmpty());
     }
 }
