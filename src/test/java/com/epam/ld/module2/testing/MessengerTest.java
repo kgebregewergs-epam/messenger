@@ -4,34 +4,40 @@ import com.epam.ld.module2.testing.template.Template;
 import com.epam.ld.module2.testing.template.TemplateEngine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class MessengerTest {
 
-    private TemplateEngine templateEngine;
+    @Spy
+    TemplateEngine templateEngine;
 
-    private  MailServer mailServer;
+    @Mock
+    MailServer mailServer;
 
-    private Template template;
+    @Mock
+    Template template;
 
-    private Client client;
+    @Mock
+    Client client;
+
+    @InjectMocks
     private Messenger messenger;
 
 
     @BeforeEach
     public void setUp() {
-        templateEngine = spy(TemplateEngine.class);
-        mailServer = mock(MailServer.class);
-        messenger = new Messenger(mailServer, templateEngine);
-        template = mock(Template.class);
-        client = mock (Client.class);
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
     public void checkSendMessageSuccessfully() {
-        doReturn("Hi: ${body}").when(templateEngine).generateMessage(template, client);
+        doReturn("Hi: ${body}").when(templateEngine).generateMessage(template);
         when(client.getAddresses()).thenReturn("test@Test");
         String result = messenger.sendMessage(client, template);
         assertTrue(result.contains("Hi: ${body}"));
@@ -39,8 +45,8 @@ public class MessengerTest {
     }
 
     @Test
-    public  void checkSendMessageShouldThrowNullPointerExceptionWhenClientIsNull() {
-        doReturn(null).when(templateEngine).generateMessage(template, null);
+    public void checkSendMessageShouldThrowNullPointerExceptionWhenClientIsNull() {
+        doReturn(null).when(templateEngine).generateMessage(template);
 
         Exception exception = assertThrows(NullPointerException.class, () ->
         {
@@ -52,8 +58,8 @@ public class MessengerTest {
     }
 
     @Test
-    public  void checkSendMessageShouldThrowNullPointerExceptionWhenTemplateEngineIsNull() {
-        doReturn(null).when(templateEngine).generateMessage(null, client);
+    public void checkSendMessageShouldThrowNullPointerExceptionWhenTemplateEngineIsNull() {
+        doReturn(null).when(templateEngine).generateMessage(null);
 
         Exception exception = assertThrows(NullPointerException.class, () ->
         {

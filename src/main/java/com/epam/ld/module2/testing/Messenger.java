@@ -40,7 +40,7 @@ public class Messenger {
         }
 
         String messageContent =
-                templateEngine.generateMessage(template, client);
+                templateEngine.generateMessage(template);
         mailServer.send(client.getAddresses(), messageContent);
 
         return messageContent + " sending to: " + client.getAddresses();

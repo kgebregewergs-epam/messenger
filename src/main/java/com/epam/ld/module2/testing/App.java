@@ -8,7 +8,6 @@ import com.epam.ld.module2.testing.template.TemplateEngine;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
-import java.io.*;
 
 /**
  * This is the main App class
@@ -16,31 +15,43 @@ import java.io.*;
 public class App {
 
     private static final Logger logger = Logger.getLogger(App.class);
-    private static final TemplateEngine templateEngine = new TemplateEngine();
-    private static final MailServer mailSever = new MailServer();
-    private static Messenger messenger = null;
+    private static Messenger messenger;
     private static ConsoleInput consoleInput;
-
+    private static FileInput fileInput;
 
     /**
-     *main method.
+     * Instantiates a new App.
      *
-     * @param args   args we get from command
+     * @param messenger     the messenger
+     * @param consoleInput the consoleInput
+     * @param fileInput the fileinput
+     */
+    public App(Messenger messenger, ConsoleInput consoleInput, FileInput fileInput) {
+        this.messenger = messenger;
+        this.consoleInput = consoleInput;
+        this.fileInput = fileInput;
+    }
+
+    /**
+     * main method.
+     *
+     * @param args args we get from command
      */
     public static void main(String[] args) {
-        messenger = new Messenger(mailSever, templateEngine);
 
+        App app = new App(new Messenger(new MailServer(), new TemplateEngine()), new ConsoleInput(),
+                new FileInput());
         // this is to properly configure the logger
         BasicConfigurator.configure();
 
         // Get Input from file
         if (args.length > 0 && !(args[0].trim().isEmpty())) {
-            getInputFromFile(args[0]);
+            app.getInputFromFile(args[0]);
             return;
         }
 
         // Get input from console
-        getInputFromConsole();
+        app.getInputFromConsole();
 
     }
 
@@ -49,11 +60,10 @@ public class App {
      *
      * @param file
      */
-    private static void getInputFromFile(String file) {
+    public void getInputFromFile(String file) {
 
         logger.info("The provided file path is: " + file);
         try {
-            FileInput fileInput = new FileInput();
             Input input = fileInput.getInput(file);
             Template template = new Template(input.getTag(), input.getMessage());
             Client client = new Client(input.getAddress());
@@ -67,10 +77,9 @@ public class App {
     /**
      * get input from console helper method.
      */
-    public static void getInputFromConsole() {
+    public void getInputFromConsole() {
 
         // I am using the consoleInput for better readability.
-        consoleInput = new ConsoleInput();
         Input input = consoleInput.getInput();
         Template template = new Template(input.getTag(), input.getMessage());
         Client client = new Client(input.getAddress());

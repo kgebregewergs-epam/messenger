@@ -14,13 +14,12 @@ public class TemplateEngine {
      * Generate message string.
      *
      * @param template the template
-     * @param client   the client
      * @return the string
      */
-    public String generateMessage(Template template, Client client) {
+    public String generateMessage(Template template) {
         boolean isValid = checkTemplate(template);
 
-        if (isValid && client != null) {
+        if (isValid) {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(template.getValue());
             stringBuilder.append(": ");
@@ -28,7 +27,7 @@ public class TemplateEngine {
             return stringBuilder.toString();
         }
 
-        return null;
+        throw new IllegalArgumentException("The template must be valid");
     }
 
     /**
@@ -43,7 +42,7 @@ public class TemplateEngine {
         }
 
         if (template.getValue() == null) {
-            throw new IllegalArgumentException("Provided with Invalid tag");
+            throw new IllegalArgumentException("Provided with Invalid value");
         }
 
         return validTemplates.contains(template.getTag());
