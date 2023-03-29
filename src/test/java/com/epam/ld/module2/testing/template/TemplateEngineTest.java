@@ -6,6 +6,11 @@ import com.epam.ld.module2.testing.datasource.FileInput;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -28,16 +33,23 @@ public class TemplateEngineTest {
     }
 
 
-    @Test
-    public void checkGenerateMessageWithValidTemplate() {
+    @ParameterizedTest
+    @MethodSource("provideValidTemplateAndValue")
+    public void checkGenerateMessageWithValidTemplate(String tag, String value, String expected) {
 
-        template.setTag("${body}");
-        template.setValue("Hi");
-
+        template.setTag(tag);
+        template.setValue(value);
         // check the templateEngine
-        String actual = templateEngine.generateMessage(template);
-        String expected = "Hi: ${body}";
+        String actual = templateEngine.generateMessage(template);;
         assertEquals(actual, expected);
+    }
+
+    private static Stream<Arguments> provideValidTemplateAndValue() {
+        return Stream.of(
+                Arguments.of("${body}", "content", "content: ${body}"),
+                Arguments.of("${subject}", "subj", "subj: ${subject}"),
+                Arguments.of("${cc}", "cc@email", "cc@email: ${cc}")
+        );
     }
 
     @Test
