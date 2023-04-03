@@ -8,6 +8,8 @@ import com.epam.ld.module2.testing.template.TemplateEngine;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
+import java.io.File;
+
 
 /**
  * This is the main App class
@@ -64,7 +66,8 @@ public class App {
 
         logger.info("The provided file path is: " + file);
         try {
-            Input input = fileInput.getInput(file);
+            File file1 = new File(file);
+            Input input = fileInput.getInput(file1);
             Template template = new Template(input.getTag(), input.getMessage());
             Client client = new Client(input.getAddress());
             messenger.sendMessage(client, template);

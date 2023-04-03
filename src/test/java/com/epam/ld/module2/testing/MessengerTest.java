@@ -11,7 +11,9 @@ import org.mockito.Spy;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import com.epam.ld.module2.testing.MessengerTestSuit.UnitTest;
 
+@UnitTest
 public class MessengerTest {
 
     @Spy
@@ -68,7 +70,6 @@ public class MessengerTest {
 
         String expectedMessage = "The template must be not null";
         String actualMessage = exception.getMessage();
-        System.out.println(actualMessage);
         assertTrue(actualMessage.contains(expectedMessage));
     }
 }

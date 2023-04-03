@@ -1,6 +1,7 @@
 package com.epam.ld.module2.testing.template;
 
 import com.epam.ld.module2.testing.Client;
+import com.epam.ld.module2.testing.MessengerTestSuit.*;
 import com.epam.ld.module2.testing.datasource.ConsoleInput;
 import com.epam.ld.module2.testing.datasource.FileInput;
 import org.junit.jupiter.api.Assertions;
@@ -15,6 +16,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
+@UnitTest
 public class TemplateEngineTest {
 
     TemplateEngine templateEngine;

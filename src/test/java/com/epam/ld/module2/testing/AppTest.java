@@ -5,6 +5,7 @@ import com.epam.ld.module2.testing.datasource.FileInput;
 import com.epam.ld.module2.testing.datasource.Input;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 

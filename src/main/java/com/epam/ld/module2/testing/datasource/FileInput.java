@@ -3,6 +3,8 @@ package com.epam.ld.module2.testing.datasource;
 import org.apache.log4j.Logger;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.util.List;
 
 /**
  * The class to get input from file.
@@ -17,45 +19,13 @@ public class FileInput {
      * @param file   file name
      * @return Input
      */
-    public Input getInput(String file) {
+    public Input getInput(File file) {
         logger.info("The provided file path is: " + file);
-        String template = null, value = null, client = null;
-        BufferedReader bufferReader = null;
         try {
-            File input = new File(file);
-            bufferReader  = new BufferedReader(new FileReader(input));
-            int inputSqs = 0;
-            String currentVal;
-            while ((currentVal = bufferReader.readLine()) != null) {
-                if(inputSqs == 0) {
-                    template = currentVal;
-                    inputSqs++;
-                }
-
-                else if(inputSqs == 1) {
-                    value = currentVal;
-                    inputSqs++;
-                }
-
-                else if (inputSqs == 2) {
-                    client = currentVal;
-                    inputSqs = 0;
-                }
-            }
-
-           return new Input(template, value, client);
-
+            List<String> inputFromFile = Files.readAllLines(file.toPath());
+            return new Input(inputFromFile.get(0), inputFromFile.get(1), inputFromFile.get(2));
         } catch (IOException e) {
-            logger.error("Caught Exception: " + e.getMessage());
-
-        }
-
-        finally {
-            try {
-                bufferReader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            logger.info("Error reading from file: " + e.getMessage());
         }
 
         return new Input(null, null, null);
