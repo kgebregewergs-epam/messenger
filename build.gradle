@@ -32,11 +32,17 @@ clover {
     }
 }
 dependencies {
+    // Added a logging
+    implementation 'log4j:log4j:1.2.17'
+
     clover 'org.openclover:clover:4.4.1'
     testImplementation('org.junit.jupiter:junit-jupiter:5.6.2')
     testRuntimeOnly ('org.junit.jupiter:junit-jupiter-engine:5.6.2')
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.6.2")
     testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.6.2")
+
+    // added a mockito
+    testImplementation 'org.mockito:mockito-core:2.1.0'
 }
 
 test {
